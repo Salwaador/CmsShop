@@ -162,6 +162,7 @@ namespace CmsShop.Areas.Admin.Controllers
             return RedirectToAction("EditPage");
         }
 
+        // GET: Admin/Pages/Details/id
         public ActionResult Details(int id)
         {
             //PageVM declaration
@@ -186,6 +187,24 @@ namespace CmsShop.Areas.Admin.Controllers
             }
 
             return View(model); 
+        }
+
+        // GET: Admin/Pages/DeletePage/id
+        public ActionResult Delete(int id)
+        {
+            using (Db db = new Db())
+            {
+                //Get page for delete
+                PageDTO dto = db.Pages.Find(id);
+
+                //Delete page from DB
+                db.Pages.Remove(dto);
+
+                //Save
+                db.SaveChanges(); 
+            }
+
+            return RedirectToAction("Index"); 
         }
     }
 }
